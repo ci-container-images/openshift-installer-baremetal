@@ -1,0 +1,24 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: Docker@2
+    displayName: "Login docker registry"
+    inputs:
+       command: login
+       containerRegistry: quay.io
+
+  - task: Docker@2
+    displayName: "Build and push  docker image"
+    inputs:
+      #Dockerfile: "**/v0.12.24/Dockerfile"
+      command: buildAndPush
+      repository: ci-container-images/openshift-installer-baremetal
+      tags: |
+        v4.3.8
+
+
+
